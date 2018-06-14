@@ -1,4 +1,3 @@
-static volatile char *const VGABUF = (volatile void *) 0xb8000;
 
 #include "decls.h"
 #include "multiboot.h"	
