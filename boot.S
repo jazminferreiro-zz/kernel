@@ -31,7 +31,8 @@ _start:
     //CMV mueve memoria si la condicion anterior es verddera.
     //al llamar a una funcion el kernel debe guardar los parametros en el stack asignado
     //ebp apunta a mi stack actual, no? que sería la informacion de multiboot? es lo que esta en el registro %esp? 
-    CMOVE %ebp, %esp
+
+    CMOVE %ebp, %ebx
     call kmain
 halt:
     hlt
