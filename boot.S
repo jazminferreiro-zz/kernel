@@ -34,7 +34,7 @@ _start:
     CMOVE %ebp, %esp
     call kmain
 halt:
-    halt
+    hlt
     jmp halt
 
 .data
