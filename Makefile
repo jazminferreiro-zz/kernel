@@ -1,4 +1,19 @@
+#SRC := ??
+
 CFLAGS := -g -m32 -O1
+
+QEMU := qemu-system-i386 -serial mon:stdio
+KERN ?= kernel
+BOOT := -kernel $(KERN) $(QEMU_EXTRA)
+
+qemu: $(KERN)
+	$(QEMU) $(BOOT)
+
+qemu-gdb: $(KERN)
+	$(QEMU) -kernel kern0 -S -gdb tcp:127.0.0.1:7508 $(BOOT)
+
+gdb:
+	gdb -q -s kern0 -n -ex 'target remote 127.0.0.1:7508'
 
 kernel: boot.o decls.o kernel.o
 	ld -m elf_i386 -Ttext 0x100000  $^ -o $@
@@ -11,4 +26,16 @@ kernel: boot.o decls.o kernel.o
 clean:
 	rm -f kernel *.o core
 
-.PHONY: clean
+.PHONY: clean qemu qemu-gdb gdb
+
+
+#CPPFLAGS := -nostdinc -idirafter lib
+
+#GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/6
+#CPPFLAGS += -I$(GCC_PATH)/include -I$(GCC_PATH)/include-fixed
+
+
+
+
+
+
