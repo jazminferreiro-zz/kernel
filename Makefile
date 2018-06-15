@@ -1,4 +1,9 @@
-#SRC := ??
+CC=clang
+CPPFLAGS := -nostdlibinc -idirafter lib
+
+#CPPFLAGS := -nostdinc -idirafter lib
+#GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/6
+#CPPFLAGS += -I$(GCC_PATH)/include -I$(GCC_PATH)/include-fixed
 
 CFLAGS := -g -m32 -O1
 
@@ -15,13 +20,14 @@ qemu-gdb: $(KERN)
 gdb:
 	gdb -q -s kern0 -n -ex 'target remote 127.0.0.1:7508'
 
-kernel: boot.o decls.o kernel.o
+kernel: boot.o decls.o kernel.o lib/string.o
 	ld -m elf_i386 -Ttext 0x100000  $^ -o $@
 	# Verificar imagen Multiboot v1.
 	grub-file --is-x86-multiboot $@
 
 %.o: %.S
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS)  $(CPPFLAGS) -c $<
+	#$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f kernel *.o core
@@ -29,10 +35,7 @@ clean:
 .PHONY: clean qemu qemu-gdb gdb
 
 
-#CPPFLAGS := -nostdinc -idirafter lib
 
-#GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/6
-#CPPFLAGS += -I$(GCC_PATH)/include -I$(GCC_PATH)/include-fixed
 
 
 
