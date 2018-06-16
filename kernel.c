@@ -12,5 +12,12 @@ void kmain(const multiboot_info_t *mbi) {
         // Aquí usar strlcat() para concatenar cmdline a buf.
         strncat(buf, cmdline,  sizeof(buf) - strlen(buf) - 1);
         vga_write(buf, 9, 0x07);
+
+        // A remplazar por una llamada a two_stacks(),
+    	// definida en stacks.S.
+        extern two_stacks();
+        two_stacks();
+    	vga_write("vga_write() from stack1", 12, 0x17);
+    	vga_write("vga_write() from stack2", 13, 0x90);
     }
 }	
