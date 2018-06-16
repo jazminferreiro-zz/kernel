@@ -8,7 +8,7 @@ CPPFLAGS := -nostdlibinc -idirafter lib
 CFLAGS := -g -m32 -O1
 
 QEMU := qemu-system-i386 -serial mon:stdio
-KERN ?= kernel
+KERN := kernel	
 BOOT := -kernel $(KERN) $(QEMU_EXTRA)
 
 qemu: $(KERN)
