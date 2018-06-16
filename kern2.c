@@ -1,7 +1,6 @@
 #include "decls.h"
 #include "multiboot.h"
-
-extern void two_stacks();
+#include "stacks.S"
 
 void kmain(const multiboot_info_t *mbi) {
     vga_write("kern2 loading.............", 8, 0x70);
