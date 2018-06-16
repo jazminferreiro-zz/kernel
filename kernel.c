@@ -1,7 +1,7 @@
 
 #include "decls.h"
 #include "multiboot.h"
-#include <string.h>	
+#include <string.h>
 
 void kmain(const multiboot_info_t *mbi) {
     vga_write("kern2 loading.............", 8, 0x70);
@@ -13,4 +13,4 @@ void kmain(const multiboot_info_t *mbi) {
         strlcat(buf, cmdline, sizeof(buf));
         vga_write(buf, 9, 0x07);
     }
-}	
+}

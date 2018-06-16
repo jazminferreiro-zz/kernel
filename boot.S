@@ -24,15 +24,10 @@ _start:
     // comparar con MULTIBOOT_BOOTLOADER_MAGIC, pero no usar
     // un salto a continuación, sino una instrucción CMOVcc
     // (copia condicional).
-    // ...
     mov $0, %ecx
-    CMP %eax, MULTIBOOT_BOOTLOADER_MAGIC
-
+    test %eax, MULTIBOOT_BOOTLOADER_MAGIC
     //CMV mueve memoria si la condicion anterior es verddera.
-    //al llamar a una funcion el kernel debe guardar los parametros en el stack asignado
-    //ebp apunta a mi stack actual, no? que sería la informacion de multiboot? es lo que esta en el registro %ebx? 
-
-    CMOVNE %ecx, %ebx
+    cmovne %ecx, %ebx
     push %ebx
     call kmain
 halt:
@@ -40,6 +35,6 @@ halt:
     jmp halt
 
 .data
-.p2align 3
+.p2align 12
 kstack:
     .space KSTACK_SIZE
