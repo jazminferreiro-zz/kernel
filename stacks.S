@@ -54,7 +54,9 @@ two_stacks:
   call vga_write
 
   // Restaurar registros callee-saved, si se usaron.
-  //... eax? ebx?
+  //... ebx? conviene usar ecx en lugar de ebx?
+  // con ecx no me corrio bien...
+  // deberia guardar eax y ecx por si vga_write los cambia?
 
   leave
   ret
