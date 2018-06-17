@@ -1,6 +1,8 @@
 // Realiza una llamada a "entry" sobre el stack proporcionado.
 //extern void task_exec(uintptr_t entry, uintptr_t stack);
 
+.align 4
+
 .text
 
 .globl task_exec
