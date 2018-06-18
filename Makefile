@@ -1,7 +1,7 @@
 #CC=clang
 #CPPFLAGS := -nostdlibinc -idirafter lib
 
-CPPFLAGS := -ffreestanding -fno-stack-protector -nostdinc -idirafter lib
+CPPFLAGS := -fasm -fno-omit-frame-pointer -ffreestanding -fno-stack-protector -nostdinc -idirafter lib
 GCC_PATH := /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1
 CPPFLAGS += -I$(GCC_PATH)/include -I$(GCC_PATH)/include-fixed
 
