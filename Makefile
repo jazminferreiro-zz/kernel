@@ -20,7 +20,7 @@ qemu-gdb: $(KERN)
 gdb:
 	gdb -q -s kern0 -n -ex 'target remote 127.0.0.1:7508'
 
-kernel: boot.o decls.o kern2-regcall.o lib/string.o stacks.o tasks.o func.o
+kernel: boot.o decls.o kern2-swap.o lib/string.o stacks.o tasks.o func.o contador.o
 	ld -m elf_i386 -Ttext 0x100000  $^ -o $@
 	grub-file --is-x86-multiboot $@
 
