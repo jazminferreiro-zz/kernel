@@ -14,7 +14,7 @@ void kmain(const multiboot_info_t *mbi) {
     vga_write("kern2 loading.............", 8, 0x70);
 
     two_stacks();
-    two_stacks_c();
+    //two_stacks_c();
     contador_run();  // Nueva llamada ej. kern2-swap.
 
     vga_write2("Funciona vga_write2?", 18, 0xE0);

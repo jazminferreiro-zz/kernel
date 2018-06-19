@@ -40,10 +40,11 @@ task_swap:
   push %ebp
 
 // cargar en %esp el stack de la nueva tarea, y guardar en la variable esp el valor previo de %esp
-  movl 20(%esp), %eax
-  movl %esp, %edx
-  movl (%eax), %esp
-  movl %edx, (%eax) //guardo stack anterior en este stack
+  movl 20(%esp), %eax // %eax = esp <-- variable esp
+  movl %esp, %edx     // %edx = %esp <-- stack actual
+  movl (%eax), %esp   // %esp = *esp <-- lo que apunta var esp
+  movl %edx, (%eax)   // esp debe apuntar a lo que habia en %esp
+                      // => *esp = %esp
 
 // restaurar, desde el nuevo stack, los registros que fueron guardados por una llamada previa a task_swap(), y retornar (con la instrucción ret) a la nueva tarea.
   pop %ebp

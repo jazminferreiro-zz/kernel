@@ -68,13 +68,14 @@ void contador_run() {
     *(b--) = (uintptr_t) 1;
     *(b--) = (uintptr_t) 100;
 
+    *(b--) = 0; //
+    *(b--) = (uintptr_t) contador_yield; // para retorno de task_swap
+
     *(b--) = 0; //ebx
     *(b--) = 0; //esi
     *(b--) = 0; //edi
-    *(b--) = 0; //ebx
+    *(b) = 0; //ebx
 
-    *(b--) = 0; // para retorno de task_swap
-    *(b) = (uintptr_t) contador_yield; // cual deberia ser la dir de retorno??
 
     // Actualizar la variable estática ‘esp’ para que apunte
     // al del segundo contador.
