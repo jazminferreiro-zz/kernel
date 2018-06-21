@@ -15,7 +15,7 @@ qemu: $(KERN)
 	$(QEMU) $(BOOT)
 
 qemu-gdb: $(KERN)
-	$(QEMU) -S -gdb tcp:127.0.0.1:7508 $(BOOT)
+	$(QEMU) -d guest_errors -S -gdb tcp:127.0.0.1:7508 $(BOOT)
 
 gdb:
 	gdb -q -s kernel -n -ex 'target remote 127.0.0.1:7508'

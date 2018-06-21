@@ -15,8 +15,7 @@ vga_write2:
         push %ecx
         // linea esta en edx
         push %edx
-        // *s esta en eax???
-        //movl 16(%ebp), %eax
+        // *s esta en eax
         push %eax
 
         call vga_write

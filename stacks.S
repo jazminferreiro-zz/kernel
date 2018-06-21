@@ -21,6 +21,7 @@ msg2:
 .globl two_stacks
 two_stacks:
   // Preámbulo estándar
+  push %ebx
   push %ebp
   movl %esp, %ebp
 
@@ -31,7 +32,8 @@ two_stacks:
   // Cargar argumentos a ambos stacks en paralelo. Ayuda:
   // usar offsets respecto a %eax ($stack1_top), y lo mismo
   // para el registro usado para stack2_top.
-  movl $0x17, -4(%eax) //0??
+
+  movl $0x17, -4(%eax)
   movl $0x90, -4(%ebx)
 
   movl $12, -8(%eax)
@@ -54,9 +56,8 @@ two_stacks:
   call vga_write
 
   // Restaurar registros callee-saved, si se usaron.
-  //... ebx? conviene usar ecx en lugar de ebx?
-  // con ecx no me corrio bien...
-  // deberia guardar eax y ecx por si vga_write los cambia?
+  movl %ebp, %esp
 
   leave
+  pop %ebx
   ret

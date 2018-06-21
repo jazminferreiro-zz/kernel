@@ -12,7 +12,6 @@ breakpoint:
         push %ebx
         push %edi
         push %esi
-        push %ebp
 
         // (2) Preparar argumentos de la llamada.
         movl $0xB0, %eax
@@ -27,7 +26,6 @@ breakpoint:
         call vga_write2
 
         // (4) Restaurar registros.
-        pop %ebp
         pop %esi
         pop %edi
         pop %ebx

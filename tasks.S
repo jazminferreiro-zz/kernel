@@ -19,8 +19,7 @@ task_exec:
   call %eax
 
   //return
-  movl %ebp, %esp
-  pop  %ebp
+  leave
   ret
 
 /////////////////////////////////////////////////////////////

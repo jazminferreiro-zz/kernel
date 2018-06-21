@@ -14,12 +14,12 @@ void kmain(const multiboot_info_t *mbi) {
     vga_write("kern2 loading.............", 8, 0x70);
 
     two_stacks();
-    //two_stacks_c();
+    two_stacks_c();
 
     // Código ejercicio kern2-idt.
-    idt_init();   // (a)
+    //idt_init();   // (a)
+    //asm("int3");  // (b)
     //irq_init();
-    asm("int3");  // (b)
 
     vga_write2("Funciona vga_write2?", 18, 0xE0);
 }
@@ -31,7 +31,7 @@ static uint8_t stack2[USTACK_SIZE] __attribute__((aligned(4096)));
 void two_stacks_c() {
     // Inicializar al *tope* de cada pila.
     uintptr_t *a = (uintptr_t *) &stack1[USTACK_SIZE-1];
-    uintptr_t *b = &stack2[USTACK_SIZE-1];
+    uintptr_t *b = (uintptr_t *) &stack2[USTACK_SIZE];
 
     // Preparar, en stack1, la llamada:
     // vga_write("vga_write() from stack1", 15, 0x57);
@@ -50,7 +50,7 @@ void two_stacks_c() {
     task_exec((uintptr_t) vga_write, (uintptr_t) a);
 
     // Segunda llamada con ASM directo.
-    asm("push %%esp; movl %0, %%esp; call *%1; pop %%esp;"
+    asm("push %%ebp; movl %%esp, %%ebp; movl %0, %%esp; call *%1; leave;"
         : /* no outputs */
         : "r"(b), "r"(vga_write));
 }
