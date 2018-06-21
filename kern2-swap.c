@@ -1,6 +1,6 @@
 #include "decls.h"
 #include "multiboot.h"
-
+#include "interrupts.h"
 
 #define USTACK_SIZE 4096
 
@@ -15,7 +15,11 @@ void kmain(const multiboot_info_t *mbi) {
 
     two_stacks();
     //two_stacks_c();
-    contador_run();  // Nueva llamada ej. kern2-swap.
+
+    // Código ejercicio kern2-idt.
+    idt_init();   // (a)
+    //irq_init();
+    asm("int3");  // (b)
 
     vga_write2("Funciona vga_write2?", 18, 0xE0);
 }
