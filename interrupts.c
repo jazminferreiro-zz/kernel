@@ -2,7 +2,7 @@
 #include "interrupts.h"
 
 static struct IDTR idtr;
-static struct Gate idt[255]; // mas chico?? 34
+static struct Gate idt[256]; // mas chico?? 34
 
 // Multiboot siempre define "8" como el segmento de código.
 // (Ver campo CS en `info registers` de QEMU.)
