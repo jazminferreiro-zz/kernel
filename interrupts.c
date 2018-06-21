@@ -2,6 +2,7 @@
 #include "interrupts.h"
 
 static struct IDTR idtr;
+
 static struct Gate idt[256]; // mas chico?? 34
 
 // Multiboot siempre define "8" como el segmento de código.
@@ -37,7 +38,7 @@ void idt_init() {
 
   // (2) Configurar ubicación de la IDT.
   idtr.base = (uintptr_t) idt;
-  idtr.limit = 255*8 - 1;
+  idtr.limit = 255*8 ;
 
   // (3) Activar IDT.
   asm("lidt %0" : : "m"(idtr));
