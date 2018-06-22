@@ -403,18 +403,3 @@ strlcat (char *dst, const char *src, size_t size)
     }
   return src_len + dst_len;
 }
-
-char *strncat(char *dest, const char *src, size_t n){
-    char * result = dest;
-    while (*dest != 0)
-        dest++;
-    while (n > 0){
-      *dest++ = *src++;
-      n--;
-      if(*src == 0){
-        return result;
-      }
-    }
-    *dest = 0;
-    return result;
-}
