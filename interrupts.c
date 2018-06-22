@@ -20,7 +20,7 @@ void idt_install(uint8_t n, void (*handler)(void)) {
     idt[n].type = STS_IG32;
     idt[n].segment = KSEG_CODE;
 
-    idt[n].off_15_0 = addr & 0xFF;
+    idt[n].off_15_0 = addr & 0xFFFF;
     idt[n].off_31_16 = addr >> 16;
 
     idt[n].present = 1;
@@ -31,14 +31,14 @@ extern void divzero();
 
 void idt_init() {
   // (1) Instalar manejadores ("interrupt service routines").
-  vga_write("idt loading.............", 17, 0x70);
   //excepciones
   idt_install(T_BRKPT, breakpoint);
-  //idt_install(T_DIVIDE, divzero);
+  //faults
+  idt_install(T_DIVIDE, divzero);
 
   // (2) Configurar ubicación de la IDT.
   idtr.base = (uintptr_t) idt;
-  idtr.limit = 255*8 ;
+  idtr.limit = 256*8 - 1 ;
 
   // (3) Activar IDT.
   asm("lidt %0" : : "m"(idtr));
@@ -50,6 +50,7 @@ void idt_init() {
 #define outb(port, data) asm("outb %b0,%w1" : : "a"(data), "d"(port));
 
 extern void ack_irq();
+extern void timer_asm();
 
 static void irq_remap() {
     outb(0x20, 0x11);
@@ -69,8 +70,8 @@ void irq_init() {
   irq_remap();
 
   // (2) Instalar manejadores.
-  //idt_install(T_TIMER, ack_irq);
-  //idt_install(T_KEYBOARD, ack_irq);
+  idt_install(T_TIMER, timer_asm);
+  idt_install(T_KEYBOARD, ack_irq);
 
   // (3) Habilitar interrupciones.
   asm("sti");

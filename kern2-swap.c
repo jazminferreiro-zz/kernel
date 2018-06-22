@@ -11,17 +11,22 @@ extern void two_stacks();
 void two_stacks_c();
 
 void kmain(const multiboot_info_t *mbi) {
+    int8_t linea;
+    uint8_t color;
+
     vga_write("kern2 loading.............", 8, 0x70);
 
     two_stacks();
     two_stacks_c();
 
-    // Código ejercicio kern2-idt.
-    idt_init();   // (a)
-    asm("int3");  // (b)
-    //irq_init();
+    idt_init();
+    irq_init();
 
-    vga_write2("Funciona vga_write2?", 18, 0xE0);
+    asm("div %4"
+        : "=a"(linea), "=c"(color)
+        : "0"(18), "1"(0xE0), "b"(0), "d"(0));
+
+    vga_write2("Funciona vga_write2?", linea, color);
 }
 
 

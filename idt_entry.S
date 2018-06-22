@@ -1,5 +1,77 @@
 
+#define PIC1 0x20
+#define ACK_IRQ 0x20
+
+
 .globl breakpoint
 breakpoint:
-        // Manejador mínimo.
+
+        // (1) Guardar registros.
+        push %ebx
+        push %edi
+        push %esi
+        // Preámbulo estándar
+        push %ebp
+        movl %esp, %ebp
+
+        // (2) Preparar argumentos de la llamada.
+        movl $0xB0, %ecx
+        movl $14, %edx
+        movl $breakpoint_msg, %eax
+
+        // (3) Invocar a vga_write2()
+        // vga_write2("Hello, breakpoint", 14, 0xB0);
+        call vga_write2
+
+        // (4) Restaurar registros.
+        leave
+        pop %esi
+        pop %edi
+        pop %ebx
+
+        // (5) Finalizar ejecución del manejador.
         iret
+
+
+.globl ack_irq
+ack_irq:
+        // Indicar que se manejó la interrupción.
+        movl $ACK_IRQ, %eax
+        outb %al, $PIC1
+        iret
+
+
+.globl timer_asm
+timer_asm:
+        // Guardar registros.
+        // hay que guardar?
+        call timer
+        // Restaurar registros.
+
+        jmp ack_irq
+
+
+.globl divzero
+divzero:
+        // Guardar registros
+        // Preámbulo estándar
+        push %ebp
+        movl %esp, %ebp
+        // incrementar ebx para cuando se reintente
+        add %ebx, 0x1
+
+        // (3) Invocar a vga_write_cyan()
+        // vga_write_cyan("Se divide por ++ebx", 17);
+        movl $17, %edx
+        movl $divzero_msg, %eax
+        call vga_write_cyan
+
+        // Restaurar registros
+        leave
+        iret
+
+.data
+divzero_msg:
+        .asciz "Se divide por ++ebx"
+breakpoint_msg:
+        .asciz "Hello, breakpoint"
