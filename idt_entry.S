@@ -54,11 +54,10 @@ timer_asm:
 .globl divzero
 divzero:
         // Guardar registros
-        // Preámbulo estándar
-        push %ebp
-        movl %esp, %ebp
+        //push %ebp
+        //movl %esp, %ebp
         // incrementar ebx para cuando se reintente
-        add %ebx, 0x1
+        inc %ebx
 
         // (3) Invocar a vga_write_cyan()
         // vga_write_cyan("Se divide por ++ebx", 17);
@@ -67,7 +66,7 @@ divzero:
         call vga_write_cyan
 
         // Restaurar registros
-        leave
+        //leave
         iret
 
 .data
