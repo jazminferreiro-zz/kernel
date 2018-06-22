@@ -26,9 +26,6 @@ void idt_install(uint8_t n, void (*handler)(void)) {
     idt[n].present = 1;
 }
 
-extern void breakpoint();
-extern void divzero();
-
 void idt_init() {
   // (1) Instalar manejadores ("interrupt service routines").
   //excepciones
@@ -48,9 +45,6 @@ void idt_init() {
 ////////////IRQ////////////////////////////////////
 ///////////////////////////////////////////////////
 #define outb(port, data) asm("outb %b0,%w1" : : "a"(data), "d"(port));
-
-extern void ack_irq();
-extern void timer_asm();
 
 static void irq_remap() {
     outb(0x20, 0x11);

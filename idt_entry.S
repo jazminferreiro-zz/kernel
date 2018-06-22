@@ -7,9 +7,9 @@
 breakpoint:
 
         // (1) Guardar registros.
-        push %ebx
-        push %edi
-        push %esi
+        push %eax
+        push %edx
+        push %ecx
         // Preámbulo estándar
         push %ebp
         movl %esp, %ebp
@@ -25,9 +25,9 @@ breakpoint:
 
         // (4) Restaurar registros.
         leave
-        pop %esi
-        pop %edi
-        pop %ebx
+        pop %ecx
+        pop %edx
+        pop %eax
 
         // (5) Finalizar ejecución del manejador.
         iret
@@ -44,18 +44,24 @@ ack_irq:
 .globl timer_asm
 timer_asm:
         // Guardar registros.
+        push %eax
+        push %ecx
+        push %edx
         // hay que guardar?
         call timer
         // Restaurar registros.
-
+        pop %edx
+        pop %ecx
+        pop %eax
+        
         jmp ack_irq
 
 
 .globl divzero
 divzero:
         // Guardar registros
-        //push %ebp
-        //movl %esp, %ebp
+        push %eax
+        push %ebx
         // incrementar ebx para cuando se reintente
         inc %ebx
 
@@ -66,7 +72,8 @@ divzero:
         call vga_write_cyan
 
         // Restaurar registros
-        //leave
+        pop %ebx
+        pop %eax
         iret
 
 .data

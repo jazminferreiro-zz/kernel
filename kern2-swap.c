@@ -4,12 +4,6 @@
 
 #define USTACK_SIZE 4096
 
-extern void task_exec(uintptr_t entry, uintptr_t stack);
-extern void task_swap(uintptr_t *esp);
-
-extern void two_stacks();
-void two_stacks_c();
-
 void kmain(const multiboot_info_t *mbi) {
     int8_t linea;
     uint8_t color;
@@ -18,15 +12,17 @@ void kmain(const multiboot_info_t *mbi) {
 
     two_stacks();
     two_stacks_c();
+    contador_run();
 
     idt_init();
+    asm("int3");
     irq_init();
 
     asm("div %4"
         : "=a"(linea), "=c"(color)
         : "0"(18), "1"(0xE0), "b"(0), "d"(0));
 
-    vga_write2("Funciona vga_write2?", linea, color);
+    vga_write2("Funciona vga_write2?", 18, 0xE0);
 }
 
 
