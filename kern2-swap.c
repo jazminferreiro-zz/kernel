@@ -1,6 +1,7 @@
 #include "decls.h"
 #include "multiboot.h"
 #include "interrupts.h"
+#include "sched.h"
 
 #define USTACK_SIZE 4096
 
@@ -13,6 +14,8 @@ void kmain(const multiboot_info_t *mbi) {
     two_stacks();
     two_stacks_c();
     contador_run();
+
+    sched_init();
 
     idt_init();
     asm("int3");

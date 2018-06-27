@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "decls.h"
 #include "interrupts.h"
 
