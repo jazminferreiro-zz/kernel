@@ -49,6 +49,20 @@ static void contador_yield(unsigned lim, uint8_t linea, char color) {
     }
 }
 
+
+//ceda por una vez más el procesador a la primera tarea
+//anule la variable esp, de manera que la primera tarea no ceda más el control, hasta su finalización
+
+static void exit() {
+    uintptr_t tmp = esp;
+    esp = 0;
+    task_swap(&tmp);
+}
+
+
+
+
+
 /*    la configuración del stack del primer contador, que se ejecuta con task_exec(), será muy similar a las realizadas en la función two_stacks_c() del ejercicio kern2-exec.
 
     la configuración del segundo contador es más compleja, y seguramente sea mejor realizarla tras implementar task_swap(); pues se debe crear artificialmente el stack tal y como lo hubiera preparado esta función.*/
@@ -68,7 +82,8 @@ void contador_run() {
     *(b--) = (uintptr_t) 1;
     *(b--) = (uintptr_t) 100;
 
-    *(b--) = 0; //
+
+    *(--b) = (uintptr_t)exit; //exit
     *(b--) = (uintptr_t) contador_yield; // para retorno de task_swap
 
     *(b--) = 0; //ebx
