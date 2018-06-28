@@ -52,11 +52,11 @@ timer_asm:
         outb %al, $PIC1
 
         // Llamada a sched con argumento
-        push %esp
-        call sched
+        //push %esp
+        //call sched
 
         // Retornar (si se volvió de sched)
-        addl $4, %esp
+        //addl $4, %esp
         popa
         iret
 
@@ -87,8 +87,10 @@ kbd_asm:
         pusha
         //llamar keyboard
         call keyboard
+
         popa
-        iret 
+        jmp ack_irq
+        //iret
 
 .data
 divzero_msg:

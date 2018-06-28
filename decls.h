@@ -27,6 +27,7 @@ void irq_init();
 void timer();
 extern void ack_irq();
 extern void timer_asm();
+extern void kbd_asm();
 
 void sched_init();
 void spawn(void (*entry)(void));
