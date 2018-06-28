@@ -1,6 +1,8 @@
 #include "decls.h"
 #include <stdbool.h>
 
+#define SHIFT_CODE 0x2a
+
 /**
  * Handler para el timer (IRQ0). Escribe un carácter cada segundo.
  */
@@ -27,7 +29,7 @@ void timer() {
 /**
  * Mapa de "scancodes" a caracteres ASCII en un teclado QWERTY.
  */
-static const char SHIFT_CODE = 0x2a;
+
 static char klayout[128] = {
     0,   0,   '1', '2', '3', '4', '5', '6', '7', '8',             // 0-9
     '9', '0', 0,   0,   0,   0,   'q', 'w', 'e', 'r',             // 10-19
