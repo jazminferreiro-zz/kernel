@@ -30,7 +30,6 @@ extern void timer_asm();
 
 void sched_init();
 void spawn(void (*entry)(void));
-//void sched(struct TaskFrame *tf);
 void contador_spawn();
 
 #endif

@@ -26,3 +26,4 @@ struct Task {
     enum TaskStatus status;
     struct TaskFrame *frame;
 };
+

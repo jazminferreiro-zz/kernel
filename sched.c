@@ -2,7 +2,7 @@
 #include "sched.h"
 
 #define MAX_TASK 10
-#define IF 0x100
+#define IF 0x200
 
 static struct Task Tasks[MAX_TASK];
 static struct Task *current;
@@ -49,6 +49,9 @@ Tasks[i].frame = (struct TaskFrame *) ((--stack) - sizeof(struct TaskFrame));
   Tasks[i].frame->eflags = IF;
 }
 
+
+
+
 /*
 encontrar, de manera round-robin, la siguiente tarea que se encuentra en estado
 READY.
@@ -64,7 +67,8 @@ void sched(struct TaskFrame *tf) {
       break;
     }
   }
-  i = i + 1;
+
+  i = i + 1;  
   new = &Tasks[i];
   while (new != old) {
     if (i == MAX_TASK)
@@ -91,3 +95,4 @@ void sched(struct TaskFrame *tf) {
     : "memory");
 
 }
+

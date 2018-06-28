@@ -22,6 +22,7 @@ _start:
     cmovne %ecx, %ebx
     push %ebx
     call kmain
+.globl halt
 halt:
     hlt
     jmp halt

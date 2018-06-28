@@ -47,6 +47,7 @@ static void contador_yield(unsigned lim, uint8_t linea, char color) {
 
         yield();
     }
+
 }
 
 
@@ -83,7 +84,7 @@ void contador_run() {
     *(b--) = (uintptr_t) 100;
 
 
-    *(--b) = (uintptr_t)exit; //exit
+    *(b--) = (uintptr_t)exit; //exit
     *(b--) = (uintptr_t) contador_yield; // para retorno de task_swap
 
     *(b--) = 0; //ebx
@@ -102,15 +103,15 @@ void contador_run() {
 
 
 static void contador1() {
-    contador_yield(50000000, 2, 0x2F);
+    contador_yield(500, 2, 0x2F);
 }
 
 static void contador2() {
-    contador_yield(50000000, 3, 0x6F);
+    contador_yield(500, 3, 0x6F);
 }
 
 static void contador3() {
-    contador_yield(50000000, 4, 0x4F);
+    contador_yield(500, 4, 0x4F);
 }
 
 void contador_spawn() {
