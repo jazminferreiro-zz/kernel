@@ -3,8 +3,8 @@
 GCC_BIN := /opt/gcc-arm-none-eabi-7-2017-q4-major/bin/
 
 CPPFLAGS := -ffreestanding -fno-stack-protector -nostdinc -idirafter lib
-GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/5
-#GCC_PATH := /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1
+#GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/5
+GCC_PATH := /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1
 CPPFLAGS +=  -I$(GCC_PATH)/include   -I$(GCC_PATH)/include-fixed
 CFLAGS := -g -m32 -O1
 
@@ -25,7 +25,7 @@ gdb:
 
 kernel: boot.o write.o kern2-swap.o lib/string.o stacks.o tasks.o func.o contador.o idt_entry.o interrupts.o handlers.o sched.o
 	ld -m elf_i386 -Ttext 0x100000  $^   $(LIBGCC)  -o $@
-	grub-file --is-x86-multiboot $@ 
+	grub-file --is-x86-multiboot $@
 
 %.o: %.S
 	$(CC) $(CFLAGS)  $(CPPFLAGS) -c $<

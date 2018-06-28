@@ -48,10 +48,8 @@ void kmain(const multiboot_info_t *mbi) {
 
     //vga_write2("Funciona vga_write2?", linea, color);
 
-    //sched();
-
-    contador_spawn();
     sched_init();
+    contador_spawn();
 
     idt_init();
     //asm("int3");

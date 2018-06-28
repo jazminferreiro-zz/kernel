@@ -30,10 +30,9 @@ void spawn(void (*entry)(void)) {
     }
   }
 
-uint8_t* stack = &Tasks[i].stack[4096];
-Tasks[i].frame = (struct TaskFrame *) ((--stack) - sizeof(struct TaskFrame));
   Tasks[i].status = READY;
-  //Tasks[i].frame = (struct TaskFrame *) &Tasks[i].stack[4096 - sizeof(struct TaskFrame) ];
+
+  Tasks[i].frame = (struct TaskFrame *) &Tasks[i].stack[4096] - sizeof(struct TaskFrame) -1;
   Tasks[i].frame->edi = 0;
   Tasks[i].frame->esi = 0;
   Tasks[i].frame->ebp = 0;
@@ -44,7 +43,7 @@ Tasks[i].frame = (struct TaskFrame *) ((--stack) - sizeof(struct TaskFrame));
   Tasks[i].frame->eax = 0;
 
   Tasks[i].frame->eip = (uint32_t) entry;
-  Tasks[i].frame->cs = 8;//(uint32_t) entry;
+  Tasks[i].frame->cs = 8;
   Tasks[i].frame->padding = 0;
   Tasks[i].frame->eflags = IF;
 }
@@ -68,14 +67,14 @@ void sched(struct TaskFrame *tf) {
     }
   }
 
-  i = i + 1;  
+  i = i + 1;
   new = &Tasks[i];
-  while (new != old) {
-    if (i == MAX_TASK)
+  while (new->status != READY) {
+    if (++i >= MAX_TASK)
       i = 0;
-    if (new->status == READY)
+    new = &Tasks[i];
+    if (new == old)
       break;
-    new = &Tasks[i++];//?
   }
 
   //si se la encuentra, se debe poner old->status a READY y
@@ -95,4 +94,3 @@ void sched(struct TaskFrame *tf) {
     : "memory");
 
 }
-
