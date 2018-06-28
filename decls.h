@@ -3,6 +3,9 @@
 
 
 #include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
 
 void __attribute__((regparm(3)))
