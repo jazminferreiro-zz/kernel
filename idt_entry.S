@@ -81,6 +81,15 @@ divzero:
         pop %eax
         iret
 
+.globl kbd_asm
+kbd_asm:
+        //guardar registros
+        pusha
+        //llamar keyboard
+        call keyboard
+        popa
+        iret 
+
 .data
 divzero_msg:
         .asciz "Se divide por ++ebx"

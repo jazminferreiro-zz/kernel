@@ -6,7 +6,6 @@
 
 static struct Task Tasks[MAX_TASK];
 static struct Task *current;
-static bool c1 = true;
 
 void sched_init() {
   //Esta función debe inicializar la variable global current
@@ -50,8 +49,6 @@ void spawn(void (*entry)(void)) {
 }
 
 
-
-
 /*
 encontrar, de manera round-robin, la siguiente tarea que se encuentra en estado
 READY.
@@ -81,11 +78,7 @@ void sched(struct TaskFrame *tf) {
   //si se la encuentra, se debe poner old->status a READY y
   //guardar en old->frame el frame recibido como parámetro;
   old->status = READY;
-  if(!c1){
-    old->frame = tf;
-  }else{
-    c1 = false;
-  }
+  old->frame = tf;
   //actualizar la variable global current y en current->status poner RUNNING.
   current = new;
   current->status = RUNNING;
