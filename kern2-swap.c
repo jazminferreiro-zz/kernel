@@ -11,6 +11,33 @@ void kmain(const multiboot_info_t *mbi) {
 
     vga_write("kern2 loading.............", 8, 0x70);
 
+
+
+    char mem[256] = "Physical memory: ";
+    char tmp[64] = "";
+    int size = (mbi->mem_upper - mbi->mem_lower) >> 10;
+    if (fmt_int(size, tmp, sizeof tmp)) {
+     strlcat(mem, tmp, sizeof mem);
+     strlcat(mem, " MiB total", sizeof mem);
+    }
+    char base[64] = "";
+    if (fmt_int(mbi->mem_lower, base, sizeof base)) {
+     strlcat(mem, " (", sizeof mem);
+     strlcat(mem, base, sizeof mem);
+     strlcat(mem, " KiB base", sizeof mem);
+    }
+    char extended[64] = "";
+    if (fmt_int(mbi->mem_upper, extended, sizeof extended)) {
+     strlcat(mem, " , ", sizeof mem);
+     strlcat(mem, extended, sizeof mem);
+     strlcat(mem, " KiB extended) ", sizeof mem);
+    }
+
+    vga_write(mem, 10, 0x07);
+
+
+
+
     two_stacks();
     two_stacks_c();
     contador_run();
