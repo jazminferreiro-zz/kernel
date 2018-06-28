@@ -3,8 +3,8 @@
 GCC_BIN := /opt/gcc-arm-none-eabi-7-2017-q4-major/bin/
 
 CPPFLAGS := -ffreestanding -fno-stack-protector -nostdinc -idirafter lib
-GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/5
-#GCC_PATH := /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1
+#GCC_PATH := /usr/lib/gcc/x86_64-linux-gnu/5
+GCC_PATH := /usr/lib/gcc/x86_64-pc-linux-gnu/8.1.1
 CPPFLAGS +=  -I$(GCC_PATH)/include   -I$(GCC_PATH)/include-fixed
 CFLAGS := -g -m32 -O1
 
