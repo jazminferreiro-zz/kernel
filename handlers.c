@@ -62,7 +62,10 @@ void keyboard() {
 
   if (code & 0x80) {
     //se solto tecla
-    code = code & 0x3F; // tabla de 52 posiciones: 6 bits
+    code = code & 0x7F; 
+    // tabla de 52 posiciones: 6 bits
+    if (code >= sizeof(klayout) || !klayout[code])
+      return;
     if (klayout[code] == SHIFT_CODE)
       KEYSTATUS = 0x0;
   } else {
