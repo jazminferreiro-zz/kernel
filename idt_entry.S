@@ -53,7 +53,7 @@ timer_asm:
         pop %edx
         pop %ecx
         pop %eax
-        
+
         jmp ack_irq
 
 
@@ -61,7 +61,8 @@ timer_asm:
 divzero:
         // Guardar registros
         push %eax
-        push %ebx
+        push %ecx
+        push %edx
         // incrementar ebx para cuando se reintente
         inc %ebx
 
@@ -72,7 +73,8 @@ divzero:
         call vga_write_cyan
 
         // Restaurar registros
-        pop %ebx
+        pop %edx
+        pop %ecx
         pop %eax
         iret
 
