@@ -23,4 +23,8 @@ void timer();
 extern void ack_irq();
 extern void timer_asm();
 
+void sched_init();
+void spawn(void (*entry)(void));
+void sched(struct TaskFrame *tf);
+
 #endif
